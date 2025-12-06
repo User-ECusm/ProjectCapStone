@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Accreditation Assessment Tracker</title>
+  <style>
+    /* Basic reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      --primary: #2c3e50;
+      --secondary: #34495e;
+      --accent: #2980b9;
+      --danger: #e74c3c;
+      --light: #f7f9fc;
+      --border: #e0e6ed;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: var(--light);
+      color: var(--secondary);
+      line-height: 1.5;
+    }
+    /* Header */
+    nav {
+      background: var(--primary);
+      color: #fff;
+      padding: 15px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    nav h1 {
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+    nav .profile {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+    }
+    /* Main container */
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 30px 40px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .container h2 {
+      margin-bottom: 24px;
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="file"] {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    /* Flex container for majors */
+    .majors {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+    .majors > div {
+      flex: 1;
+    }
+    /* Metrics section */
+    .metrics-section {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      background: var(--light);
+    }
+    .metrics-section label {
+      margin-bottom: 12px;
+    }
+    .metric-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .metric-row input[type="text"] {
+      flex: 2;
+    }
+    .metric-row input[type="number"] {
+      flex: 1;
+    }
+    .metric-row button.remove-metric {
+      flex: none;
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .metric-row button.remove-metric:hover {
+      background: #c0392b;
+    }
+    button#addMetricBtn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+    button#addMetricBtn:hover {
+      background: #1f6397;
+    }
+    /* Submit button */
+    button[type="submit"] {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+    button[type="submit"]:hover {
+      background: #22344e;
+    }
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+    th {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 500;
+    }
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>Accreditation Assessment Tracker</h1>
+    <div class="profile">&#9786;</div>
+  </nav>
+  <div class="container">
+    <h2>Assessment Form</h2>
+    <form id="submissionForm">
+      <label for="courseNumber">Course Number</label>
+      <input type="text" id="courseNumber" name="courseNumber" placeholder="CSC 424" required />
+      <div class="majors">
+        <div>
+          <label for="cs">Computer Science Students</label>
+          <input type="number" id="cs" name="cs" min="0" value="0" />
+        </div>
+        <div>
+          <label for="ce">Computer Engineering Students</label>
+          <input type="number" id="ce" name="ce" min="0" value="0" />
+        </div>
+        <div>
+          <label for="other">Other Students</label>
+          <input type="number" id="other" name="other" min="0" value="0" />
+        </div>
+      </div>
+      <label for="evidence">Upload Documents</label>
+      <input type="file" id="evidence" name="evidence" multiple />
+      <div class="metrics-section">
+        <label>Performance Metrics (enter metric name and number of students)</label>
+        <div id="metricsContainer"></div>
+        <button type="button" id="addMetricBtn">Add Metric</button>
+      </div>
+      <button type="submit">Submit Assessment</button>
+    </form>
+    <table id="submissionsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Course</th>
+          <th>CS</th>
+          <th>CE</th>
+          <th>Other</th>
+          <th>Metrics</th>
+          <th>Files</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filled dynamically -->
+      </tbody>
+    </table>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
