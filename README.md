@@ -12,10 +12,15 @@ The repository is flat for ease of deployment. Important files:
 
 
 ├── server.js        # Express API with SQLite persistence and file upload
+
 ├── app.js           # Client‑side logic for form handling and API calls
+
 ├── index.html       # Responsive front‑end interface
+
 ├── package.json     # Project metadata and dependencies
+
 ├── uploads/         # Evidence files (created at runtime)
+
 ├── database.sqlite  # SQLite database (created at runtime)
 
 
