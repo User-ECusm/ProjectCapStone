@@ -26,8 +26,8 @@ The repository is flat for ease of deployment. Important files:
 
 ## Getting Started
 
-1. **Install Node.js** 
-
+1. **Install Node.js**
+https://nodejs.org/en/download
 2. **Install dependencies.
    From the project root, run:
 
